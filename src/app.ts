@@ -1,4 +1,12 @@
+import { Server } from "./presentation/server";
 
+(async() => {
+	main()
+})();
 
-console.log("Hello there");
+function main() {
 
+	const server = new Server();
+
+	server.start();
+}
