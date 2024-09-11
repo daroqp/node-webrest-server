@@ -31,7 +31,7 @@ export class TodosController {
 	public createTodo = async(req: Request, res: Response) => {
 		const { text } = req.body;
 		if( !text ) return res.status(400).json({ error: 'Text property is required' })
-		
+
 		const todo = await prisma.todo.create({
 			data: { text }
 		});
@@ -47,7 +47,7 @@ export class TodosController {
 			where: {
 				id: id,
 			}
-    });
+		});
 
 		if ( !todo ) return res.status( 404 ).json({ error: `Todo with id ${ id } not found` });
 
@@ -75,7 +75,7 @@ export class TodosController {
 			where: {
 				id: id,
 			}
-    });
+		});
 
 		if ( !todo ) return res.status( 404 ).json({ error: `Todo with id ${ id } not found` });
 
@@ -83,8 +83,8 @@ export class TodosController {
 			where: {
 				id: id,
 			},
-    });
-      
+		});
+
 		( todoDeleted )
 			? res.json( todoDeleted )
 			: res.status(404).json({ error: `Todo with id ${ id } not found` })
