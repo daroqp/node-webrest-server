@@ -47,7 +47,7 @@ export class TodosController {
 			where: {
 				id: id,
 			}
-		});
+    });
 
 		if ( !todo ) return res.status( 404 ).json({ error: `Todo with id ${ id } not found` });
 
@@ -75,7 +75,7 @@ export class TodosController {
 			where: {
 				id: id,
 			}
-		});
+    });
 
 		if ( !todo ) return res.status( 404 ).json({ error: `Todo with id ${ id } not found` });
 
@@ -83,10 +83,10 @@ export class TodosController {
 			where: {
 				id: id,
 			},
-		});
-
+    });
+      
 		( todoDeleted )
 			? res.json( todoDeleted )
-			: res.status(404).json({ error: `Todo with id ${ id } not found` });
+			: res.status(404).json({ error: `Todo with id ${ id } not found` })
 	}
 }
