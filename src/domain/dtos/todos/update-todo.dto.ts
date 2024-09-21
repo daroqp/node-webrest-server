@@ -1,37 +1,34 @@
-
 export class UpdateTodoDto {
+  private constructor(
+    public readonly id: number,
+    public readonly text?: string,
+    public readonly completedAt?: Date,
+  ) { }
 
-	private constructor(
-		public readonly id: number,
-		public readonly text?: string,
-		public readonly completedAt?: Date,
-	){}
+  get values() {
+    const returnObj: { [key: string]: any } = {};
 
-	get values(){
-		const returnObj: {[ key: string ]: any } = {};
+    if (this.text) returnObj.text = this.text;
+    if (this.completedAt) returnObj.completedAt = this.completedAt;
 
-		if( this.text ) returnObj.text = this.text;
-		if( this.completedAt ) returnObj.completedAt = this.completedAt;
+    return returnObj;
+  }
 
-		return returnObj;
-	}
+  static create(props: { [key: string]: any }): [string?, UpdateTodoDto?] {
+    const { id, text, completedAt } = props;
+    let newCompletedAt = completedAt;
 
-	static create(props: {[ key:string ]: any }): [string?, UpdateTodoDto?] {
-		
-		const { id, text, completedAt } = props;
-		let newCompletedAt = completedAt;
+    if (!id || isNaN(Number(id))) {
+      return ["id must be a number"];
+    }
 
-		if( !id || isNaN( Number( id ) )) {
-			return [ 'id must be a number' ];
-		}
+    if (completedAt) {
+      newCompletedAt = new Date(completedAt);
+      if (newCompletedAt.toString() === "Invalid Date") {
+        return ["CompleteedAt must be a valid date", undefined];
+      }
+    }
 
-		if( completedAt ) {
-			newCompletedAt = new Date( completedAt );
-			if( newCompletedAt.toString() === 'Invalid Date' ) {
-				return ['CompleteedAt must be a valid date', undefined];
-			}
-		}
-
-		return [undefined, new 	UpdateTodoDto(id, text, newCompletedAt)]
-	}
+    return [undefined, new UpdateTodoDto(id, text, newCompletedAt)];
+  }
 }
